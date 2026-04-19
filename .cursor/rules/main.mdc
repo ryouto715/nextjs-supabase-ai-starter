@@ -1,0 +1,30 @@
+---
+description: autonomous-ai-harness の Cursor エントリーポイント
+alwaysApply: true
+---
+
+# autonomous-ai-harness で作業する際のエントリーポイント
+
+このリポジトリで作業する際は、まず以下の必読ドキュメントを読むこと:
+
+- @AGENTS.md — ワークフロー、TDD + SDD、フェーズ分割、継続開発モード、コマンド、ガードレール
+- @CONTEXT.md — プロジェクト固有の概要、技術スタック、用語集、ディレクトリ構造
+- @.agents/EXECPLAN_GUIDE.md — ExecPlan の書き方・保守ルール（複雑な作業では必読）
+- @.agents/SECURITY_POLICY.md — セキュリティポリシーの説明（自律動作時の境界）
+
+## ガイドラインの読み分け
+
+`.agents/guidelines/` 配下は「必要時のみ参照」する詳細ルール集。AGENTS.md 内の誘導に従って、タスクの性質に応じて読み込むこと。
+
+## 自己修正ループ
+
+ユーザーから修正指示を受けた場合、または自分の間違いに気づいた場合は、再発防止のためルールを更新することを提案する:
+
+- プロジェクト固有の規約・パターン → `.agents/rules/*.md` に追記
+- AI エージェント全体に適用される知見 → 同じく `.agents/rules/*.md` に追記し、Claude Code / Codex / Cursor いずれからも参照できるようにする
+
+`.cursor/` 配下はツール固有の設定のみを置く。規約類は `.agents/rules/` に集約する。
+
+## 参照方式
+
+`.agents/` 配下のファイルは、ツール間で symlink せず `@path` 参照方式で読み込む。物理ファイルは 1 箇所だけ存在し、各ツール（Claude Code / Codex / Cursor）はそれぞれのエントリーポイント（CLAUDE.md / AGENTS.md / `.cursor/rules/main.mdc`）から `@path` で参照する。

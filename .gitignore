@@ -1,0 +1,21 @@
+# Claude Code 個人/プロジェクト上書き
+.claude/settings.local.json
+
+# Codex CLI ローカル上書き
+.codex/settings.local.json
+
+# OS / エディタ
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# ログ・一時ファイル
+*.log
+.tmp/
+.cache/
+
+# 環境変数
+.env
+.env.local
+.env.*.local

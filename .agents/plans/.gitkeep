@@ -1,0 +1,3 @@
+# このディレクトリには ExecPlan ファイルを格納する
+# ファイル命名規則: <feature>_execplan.md
+# 例: user_auth_execplan.md, payment_integration_execplan.md
