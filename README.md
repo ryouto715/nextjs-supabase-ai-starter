@@ -154,8 +154,3 @@ task supabase:reset   # Supabase local をリセット
 
 本リポのハーネス部分（`.agents/` / `.claude/` / `.cursor/` / `CLAUDE.md` / `AGENTS.md`）は [`autonomous-ai-harness`](https://github.com/ryouto715/autonomous-ai-harness) から継承している。ハーネスのみの更新は上流に追従する運用（ただし Next.js 特化の guideline 差し替え部分は Track 2 独自の分岐）。
 
----
-
-## ライセンス
-
-MIT

@@ -1,7 +1,6 @@
 ---
 name: readable-code
 description: 「リーダブルコード」の原則を適用し、理解しやすいコードを書くためのスキル。新規コード、リファクタリング、コードレビュー時に参照。言語非依存で、Python / TypeScript / Java など複数言語の例を含む。
-license: MIT
 ---
 
 # リーダブルコードスキル

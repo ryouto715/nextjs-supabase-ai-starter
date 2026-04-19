@@ -1,7 +1,6 @@
 ---
 name: test-writing
 description: 読みやすく保守しやすいテストコードを作成するためのスキル。単体/統合/E2E テストに適用。AAA パターン、命名規則、モック戦略、アンチパターンを含む。Python / TypeScript / JavaScript / Java のベストプラクティスを併記。
-license: MIT
 ---
 
 # テストコード作成スキル
