@@ -1,0 +1,78 @@
+version: "3"
+
+tasks:
+  default:
+    desc: 利用可能なタスクを表示
+    cmd: task -l
+
+  precommit:
+    desc: コミット前チェック（lint + typecheck + test + format）
+    cmds:
+      - task: lint
+      - task: typecheck
+      - task: test
+      - task: format:check
+
+  lint:
+    desc: ESLint 実行
+    cmd: npm run lint
+
+  typecheck:
+    desc: TypeScript 型チェック
+    cmd: npm run typecheck
+
+  test:
+    desc: Vitest 実行
+    cmd: npm test
+
+  e2e:
+    desc: Playwright E2E 実行（webServer 自動起動）
+    cmd: npm run e2e
+
+  e2e:ui:
+    desc: Playwright E2E を UI モードで起動
+    cmd: npm run e2e:ui
+
+  supabase:start:
+    desc: Supabase Local を起動（Docker 必要）
+    cmd: npx supabase start
+
+  supabase:stop:
+    desc: Supabase Local を停止
+    cmd: npx supabase stop
+
+  supabase:reset:
+    desc: Supabase Local をリセット（全 migration 再適用）
+    cmd: npx supabase db reset
+
+  supabase:status:
+    desc: Supabase Local の状態確認（URL / anon key / service_role key 表示）
+    cmd: npx supabase status
+
+  db:generate:
+    desc: Drizzle schema.ts の変更から migration を生成
+    cmd: npx drizzle-kit generate
+
+  db:migrate:
+    desc: 生成済み migration を Supabase の DB に適用
+    cmd: npx drizzle-kit migrate
+
+  db:studio:
+    desc: Drizzle Studio 起動（DB の GUI）
+    cmd: npx drizzle-kit studio
+
+  format:
+    desc: Prettier で整形
+    cmd: npm run format
+
+  format:check:
+    desc: Prettier フォーマット確認（CI 向け）
+    cmd: npm run format:check
+
+  build:
+    desc: Next.js ビルド
+    cmd: npm run build
+
+  dev:
+    desc: 開発サーバー起動
+    cmd: npm run dev
