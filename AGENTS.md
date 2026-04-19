@@ -138,6 +138,9 @@
   技術スタックに応じた適切な `.gitignore` を作成し、シークレット（`.env`, `*.pem`, `*.key`）、
   依存関係（`node_modules/`, `venv/`）、ビルド成果物を除外する。
 - **実装時に参照すべきガイドライン**：
+  - `.agents/guidelines/ARCHITECTURE.md` - 本スターターのアーキテクチャ既定値（Next.js + Hono + Feature Slice）
+  - `.agents/guidelines/API_CLIENT_CONTRACTS.md` - Hono × Zod × `hono/client` の契約ルール
+  - `.agents/guidelines/LOGIC_UI_SEPARATION.md` - Server / Client / hook / use-case の責務分離
   - `.agents/guidelines/ERROR_HANDLING.md` - エラーハンドリング（必須）
   - `.agents/guidelines/UI_UX.md` - UI/UX（Web/モバイルアプリの場合）
   - `.agents/guidelines/OBSERVABILITY.md` - ログ・監視（本番運用を想定する場合）
@@ -648,6 +651,9 @@ enabled = true
         ├── REQUIREMENTS_TEMPLATE.md # REQUIREMENTS.md のテンプレート
         ├── SECURITY_POLICY.md       # セキュリティポリシー（説明文書）
         ├── guidelines/              # 詳細ガイドライン（必要時のみ参照）
+        │   ├── ARCHITECTURE.md      # Next.js + Hono + Feature Slice のアーキテクチャ既定値
+        │   ├── API_CLIENT_CONTRACTS.md # Hono × Zod × hono/client の契約
+        │   ├── LOGIC_UI_SEPARATION.md  # Server / Client / hook / use-case の責務分離
         │   ├── UI_UX.md             # UI/UX 開発ガイドライン
         │   ├── FEEDBACK_WORKFLOW.md # フィードバック駆動ワークフロー
         │   ├── ERROR_HANDLING.md    # エラーハンドリング
