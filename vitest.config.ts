@@ -12,6 +12,8 @@ export default defineConfig({
   test: {
     globals: true,
     passWithNoTests: true,
+    include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    exclude: ["node_modules/**", "e2e/**", ".next/**"],
     environmentMatchGlobs: [
       ["**/*.page.test.tsx", "jsdom"],
       ["**/*.component.test.tsx", "jsdom"],
