@@ -1,0 +1,42 @@
+version: "3"
+
+tasks:
+  default:
+    desc: 利用可能なタスクを表示
+    cmd: task -l
+
+  precommit:
+    desc: コミット前チェック（lint + typecheck + test + format）
+    cmds:
+      - task: lint
+      - task: typecheck
+      - task: test
+      - task: format:check
+
+  lint:
+    desc: ESLint 実行
+    cmd: npm run lint
+
+  typecheck:
+    desc: TypeScript 型チェック
+    cmd: npm run typecheck
+
+  test:
+    desc: Vitest 実行
+    cmd: npm test
+
+  format:
+    desc: Prettier で整形
+    cmd: npm run format
+
+  format:check:
+    desc: Prettier フォーマット確認（CI 向け）
+    cmd: npm run format:check
+
+  build:
+    desc: Next.js ビルド
+    cmd: npm run build
+
+  dev:
+    desc: 開発サーバー起動
+    cmd: npm run dev
