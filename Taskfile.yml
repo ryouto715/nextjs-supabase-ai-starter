@@ -25,6 +25,14 @@ tasks:
     desc: Vitest 実行
     cmd: npm test
 
+  e2e:
+    desc: Playwright E2E 実行（webServer 自動起動）
+    cmd: npm run e2e
+
+  e2e:ui:
+    desc: Playwright E2E を UI モードで起動
+    cmd: npm run e2e:ui
+
   format:
     desc: Prettier で整形
     cmd: npm run format
