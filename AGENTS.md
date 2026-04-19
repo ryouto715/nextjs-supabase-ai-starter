@@ -38,6 +38,32 @@
   ユーザーの高レベルなビジョンから、信頼性のある調査に基づいた完全なアプリケーションまで到達する。
   不必要な人間の介入なしに、プロダクトとして成立するものを作る。
 
+## プロジェクト固有の前提（Next.js + Supabase スターター）
+
+本リポジトリは `autonomous-ai-harness` のスタック非依存ハーネスを継承しつつ、**Next.js + Hono + Drizzle + Supabase の実動スタックを同梱**している。以下は前提として扱い、選定を再提案しないこと（`ADR-001` 〜 `ADR-003` / `CONTEXT.md` を参照）:
+
+- **言語・ランタイム**: TypeScript 5.x (strict) / Node.js 22 LTS
+- **フロントエンド**: Next.js 15+ (App Router)
+- **API**: Hono（Next.js の `app/api/[[...route]]/route.ts` に catch-all で mount）
+- **DB**: Supabase (PostgreSQL) — Auth + RLS を前提に利用
+- **ORM / Migration**: Drizzle ORM + Drizzle Kit（テーブル定義）+ Supabase CLI SQL migration（RLS 定義）
+- **バリデーション**: Zod + Branded Type
+- **テスト**: Vitest（node 環境 + jsdom 環境の使い分け）
+- **Lint / Format**: ESLint (flat config) + Prettier
+- **Task runner**: Taskfile.yml（合成・前提条件）+ npm scripts（原子操作）
+
+### 実装の規約
+
+- **Feature Slice 配置**: 新機能は `src/features/<domain>/` 配下に `types.ts` / `use-cases/` / `route.ts` / `use-<domain>.ts`（hook）/ `__tests__/` を集約する。レイヤ別分割（`models/` `controllers/` `views/`）は採用しない
+- **API 契約**: Hono で定義した型を `hono/client` 経由でフロントエンドに流す。手動で型定義を二重記述しない
+- **RLS 必須**: テーブルを追加するときは必ず同じ migration 内で RLS ポリシーを書く。未ポリシーの table は production にデプロイしない
+- **Auth**: 認証は Supabase Auth を第一選択。`src/middleware.ts` でセッションチェック、`src/app/(public)/` と `src/app/(protected)/` でルーティング分離
+- **環境変数**: `NEXT_PUBLIC_` 接頭辞のみフロントエンドから参照可。service role key は server-only で絶対に `NEXT_PUBLIC_` を付けない
+
+### 要追従フレームワーク
+
+`.agents/skills/framework-version-check/`（Track 1 から継承）が参照する対象は `CONTEXT.md` の「要追従フレームワーク」テーブルで宣言する。依存更新時は同テーブルを起点に LTS / stable を確認すること。
+
 ## フェーズ1：目的起点の仕様策定（ゴールドリブン・アプローチ）
 
 ### 1.1 ユーザーから聞くべきこと（優先順位順）
