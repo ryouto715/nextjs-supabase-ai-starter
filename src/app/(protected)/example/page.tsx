@@ -40,7 +40,11 @@ export default function ExamplePage() {
       </header>
 
       <form onSubmit={handleSubmit} style={{ display: "flex", gap: "0.5rem", marginTop: "1rem" }}>
+        <label htmlFor="example-title" style={{ position: "absolute", left: -9999 }}>
+          タイトル
+        </label>
         <input
+          id="example-title"
           type="text"
           required
           maxLength={200}

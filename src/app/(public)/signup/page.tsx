@@ -18,10 +18,19 @@ export default function SignupPage() {
     setIsPending(true);
 
     const supabase = createClient();
-    const { error: signUpError } = await supabase.auth.signUp({ email, password });
+    const { data, error: signUpError } = await supabase.auth.signUp({ email, password });
 
     if (signUpError) {
       setError(signUpError.message);
+      setIsPending(false);
+      return;
+    }
+
+    // Supabase の email confirmation が有効な場合、signUp は session を返さない。
+    // その状態で /example へ飛ばすと (protected)/layout のリダイレクトで /login に
+    // 戻り、"登録できたのに弾かれた" ように見えるため、明示的な案内を出す。
+    if (!data.session) {
+      setError("登録メールを送信しました。メール内のリンクから確認を完了してください。");
       setIsPending(false);
       return;
     }
