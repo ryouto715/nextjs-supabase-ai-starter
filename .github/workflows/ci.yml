@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main]
 
+# 同一ブランチ/PR で新しい push があれば進行中の run をキャンセルし、無駄な実行を減らす。
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   static:
     name: Static checks (lint + typecheck + unit test)
@@ -66,8 +71,27 @@ jobs:
           echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=$ANON_KEY" >> "$GITHUB_ENV"
           echo "DATABASE_URL=$DB_URL" >> "$GITHUB_ENV"
 
-      - name: Install Playwright browsers
+      # Playwright のブラウザバイナリをキャッシュ（E2E の最大のボトルネック）。
+      - name: Resolve Playwright version
+        id: pw
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.pw.outputs.version }}
+
+      # キャッシュミス時はブラウザ + OS 依存を一括取得。
+      - name: Install Playwright browsers (full)
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium
+
+      # キャッシュヒット時はブラウザは取得済みなので OS 依存のみ入れる（高速）。
+      - name: Install Playwright system deps (cache hit)
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
 
       - name: Build
         run: npm run build
