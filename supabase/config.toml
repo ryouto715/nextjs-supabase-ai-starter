@@ -1,6 +1,7 @@
 # Supabase Local 設定
 # 詳細: https://supabase.com/docs/guides/local-development/cli/config
 
+# 派生時はリポジトリ固有名へ変更（同名だと Docker ボリューム共有で DB が衝突する）。
 project_id = "nextjs-supabase-ai-starter"
 
 [api]
